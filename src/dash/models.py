@@ -35,7 +35,7 @@ class DashboardSettings(models.Model):
         - `is_public` (bool): If set to True, available as public (read-only
           mode).
     """
-    user = models.ForeignKey(User, verbose_name=_("User"), unique=True)
+    user = models.OneToOneField(User, verbose_name=_("User"))
     layout_uid = models.CharField(_("Layout"), max_length=25, \
                                   choices=get_registered_layouts())
     title = models.CharField(_("Title"), max_length=255)
@@ -244,9 +244,9 @@ class DashboardPlugin(models.Model):
     plugin_uid = models.CharField(_("Plugin UID"), max_length=255, \
                                   choices=get_registered_plugins(), \
                                   unique=True, editable=False)
-    users = models.ManyToManyField(User, verbose_name=_("User"), null=True, \
+    users = models.ManyToManyField(User, verbose_name=_("User"), \
                                    blank=True)
-    groups = models.ManyToManyField(Group, verbose_name=_("Group"), null=True, \
+    groups = models.ManyToManyField(Group, verbose_name=_("Group"), \
                                     blank=True)
 
     objects = DashboardPluginManager()
